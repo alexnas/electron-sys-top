@@ -22,6 +22,7 @@
   "dependencies": {
     "electron": "^9.0.4",
     "electron-packager": "^14.2.1",
+    "node-os-utils": "^1.2.4",
     "nodemon": "^2.0.4"
   }
 }
