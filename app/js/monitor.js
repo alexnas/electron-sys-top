@@ -4,11 +4,12 @@ const cpu = osu.cpu;
 const mem = osu.mem;
 const os = osu.os;
 
-const cpuOverload = 5;
+let cpuOverload = 60;
 const alertFrequency = 1;
 
 // Run every 2 seconds
 setInterval(() => {
+  console.log(cpuOverload);
   // CPU Usage
   cpu.usage().then(info => {
     document.getElementById('cpu-usage').innerText = info + '%';

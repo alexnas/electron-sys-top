@@ -12,14 +12,14 @@ let mainWindow;
 
 // Init store and defaults
 const store = new Store({
-  configName = 'user-settings',
-  defaults = {
+  configName: 'user-settings',
+  defaults: {
     settings: {
       cpuOverload: 80,
-      alertFrequency: 5
-    }
-  }
-})
+      alertFrequency: 5,
+    },
+  },
+});
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -44,6 +44,10 @@ function createMainWindow() {
 
 app.on('ready', () => {
   createMainWindow();
+
+  mainWindow.webContents.on('dom-ready', () => {
+    mainWindow.webContents.send('settings:get', store.get('settings'));
+  });
 
   const mainMenu = Menu.buildFromTemplate(menu);
   Menu.setApplicationMenu(mainMenu);
