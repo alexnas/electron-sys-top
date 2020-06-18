@@ -1,15 +1,21 @@
 const path = require('path');
 const osu = require('node-os-utils');
+const { ipcRenderer } = require('electron');
 const cpu = osu.cpu;
 const mem = osu.mem;
 const os = osu.os;
 
-let cpuOverload = 60;
-const alertFrequency = 1;
+let cpuOverload;
+let alertFrequency;
+
+// Get settings and values from store
+ipcRenderer.on('settings:get', (e, settings) => {
+  cpuOverload = +settings.cpuOverload;
+  alertFrequency = +settings.alertFrequency;
+});
 
 // Run every 2 seconds
 setInterval(() => {
-  console.log(cpuOverload);
   // CPU Usage
   cpu.usage().then(info => {
     document.getElementById('cpu-usage').innerText = info + '%';
@@ -41,7 +47,6 @@ setInterval(() => {
 
   // System Uptime
   document.getElementById('sys-uptime').innerText = secondsToDhms(os.uptime());
-  // console.log(secondsToDhms(os.uptime()));
 }, 2000);
 
 // Set CPU model
